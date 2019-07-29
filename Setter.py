@@ -13,16 +13,18 @@ import random
 
 def huoquIP(): # 获取IP数据
     agent = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:48.0) Gecko/20100101 Firefox/48.0'}
-    url = 'http://192.168.1.168:8899/api/v1/proxies'
-    a = requests.get(url,headers=agent).json()
+    url = 'http://192.168.1.114:3289/pop/'
     try:
-        for i in a["proxies"]:
-            ip = str(i['ip']) + ":" + str(i['port'])
+        while True:
+            a = requests.get(url, headers=agent).json()
+            s = a['http']
+            aa = s.strip("http://")
             f = open('ip.txt','a+')
-            f.write(ip +'\n')
+            f.write(aa +'\n')
+            f.close()
     except:
         pass
-    return ip
+    return aa
 
 localtime = time.asctime( time.localtime(time.time()))
 
@@ -121,8 +123,8 @@ def main():
 if __name__ == '__main__':
     print("""
     * by Explo1t
-    * 2018.06.05
-    * Secpt Team
+    * 2019.07.29
+    * 更新了IP池子
                  
                                            
   ____       _   _            
@@ -138,14 +140,11 @@ if __name__ == '__main__':
 
     a = input("是否启用抓取模式？如果不启用则需要本地填充IP.txt文本里的IP地址。")
     if a == "Y":
-        print("抓取完成 .... ")
-        print("""
-        \n
-        \n
-        \n
-        """)
         huoquIP()
+        print("开始抓取 .... ")
         main()
+        print("代理开启 .... ")
+        print("127.0.0.1:9999")
     else:
         main()
 
